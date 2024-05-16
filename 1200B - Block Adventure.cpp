@@ -21,32 +21,52 @@ const ll inf = (ll)1e18 + 5;
 const int mod = (int)1e9 + 7;
 
 
-int main(){
-    faster;
-    ll n , k;
-    cin>>n>>k;
-    if(n==1)
-        cout<<0<<nl;
-    else if(n<=k){
-        cout<<1<<nl;
+void solve(){
+    int n, k;
+    ll m;
+    cin>>n>>m>>k;
+    int a[n];
+    for(int i = 0; i < n; i++)
+        cin>>a[i];
+    int idx = 1;
+    for(int i = 0; i < n-1; i++){
+        if(a[i]>=a[i+1]){
+            ll diff = (a[i]-a[i+1])+min(k,a[i+1]);
+            m+=diff;
+        }
+        else if(a[i+1]>a[i]){
+            if(a[i+1]>(a[i]+k+m)){
+                cout<<"NO\n";
+                return;
+            }
+            else if(a[i+1]-a[i]<k){
+                m += min(k-(a[i+1]-a[i]),a[i]);
+            }
+            else{
+                m -= ((a[i+1]-a[i])-k);
+            }
+        }
+        //cout<<m<<" ";
+        if(m<0){
+            cout<<"NO\n";
+            return;
+        }
+        idx++;
     }
-    else if(n>(k*(k-1)/2 + 1)){
-        cout<<-1<<nl;
+    if(idx==n){
+        cout<<"YES\n";
     }
     else{
-        ll l = 0, r = k;
-        ll maxx = k*(k-1)/2 +1;
-        ll ans = -1;
-        while(l<=r){
-            ll mid = (l+r)/2;
-            ll curr = mid*(mid-1)/2 +1;
-            if(maxx-curr+1>=n){
-                ans = k - mid;
-                l = mid+1;
-            }
-            else
-                r = mid-1;
-        }
-        cout<<ans<<nl;
+        cout<<"NO\n";
+    }
+}
+
+
+int main(){
+    faster;
+    int t;
+    cin>>t;
+    while(t--){
+        solve();
     }
 }
