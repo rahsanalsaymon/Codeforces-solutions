@@ -31,7 +31,7 @@ void solve(){
     ll ans = 0;
     ll sum = 0;
 
-    unordered_set<ll> presum;
+    set<ll> presum;
     presum.insert(0);
     for(int i = 0; i< n; i++){
         sum += v[i];
